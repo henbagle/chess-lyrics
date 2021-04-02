@@ -1,7 +1,5 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
 import { Show } from "./Show";
-import "reflect-metadata";
-
 @Entity({ tableName: 'baseSong' })
 export class BaseSong {
     @PrimaryKey()
@@ -13,6 +11,6 @@ export class BaseSong {
     @ManyToOne(() => Show, {nullable : true, fieldName:"originalShow"})
     originalShow?: Show;
 
-    @Property({fieldName:"closedDate"})
+    @Property({fieldName:"maxVerses"})
     maxVerses: number = 1;
 }

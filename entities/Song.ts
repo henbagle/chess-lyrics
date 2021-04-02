@@ -1,14 +1,13 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
 import { Show } from "./Show";
 import { BaseSong } from "./BaseSong"
-import "reflect-metadata";
 
 @Entity({ tableName:  'songs' })
 export class Song {
     @PrimaryKey()
     id!: number;
 
-    @ManyToOne(() => Show, {nullable : true})
+    @ManyToOne(() => Show, {nullable : true, fieldName:"show"})
     show?: Show;
 
     @Property()
