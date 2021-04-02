@@ -11,6 +11,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@mikro-orm/core": "^4.5.1",
+    "@mikro-orm/sqlite": "^4.5.1",
     "autoprefixer": "^10.2.5",
     "dayjs": "^1.10.4",
     "gray-matter": "^4.0.2",
