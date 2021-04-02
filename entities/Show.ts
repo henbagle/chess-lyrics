@@ -6,7 +6,7 @@ export enum ShowFormat {
     concert
 }
 
-@Entity()
+@Entity({ tableName: 'shows' })
 export class Show{
     @PrimaryKey()
     id!: number;
@@ -32,11 +32,11 @@ export class Show{
     @Enum(() => ShowFormat)
     format!: ShowFormat;
 
-    @Property()
-    openedDate?: string;
+    @Property({fieldName:"openedDate"})
+    openedDate?: Date;
 
-    @Property()
-    closedDate?: string;
+    @Property({fieldName:"closedDate"})
+    closedDate?: Date;
 
     @Property()
     notes?: string;
@@ -46,4 +46,7 @@ export class Show{
 
     @Property()
     video?: string;
+
+    @Property({fieldName:"shortName"})
+    shortName?: string;
 }
