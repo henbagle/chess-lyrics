@@ -1,6 +1,6 @@
 import Container from "../../components/container";
 import Date from "../../components/date";
-import DefaultLink from "../../components/link";
+import DefaultLink from "../../components/defaultLink";
 import {getAllPostIds, getPostData, BlogPost} from "../../lib/blogpost";
 import Link from "next/link"
 import Head from "next/head";
