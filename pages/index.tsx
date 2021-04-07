@@ -1,11 +1,19 @@
 import Head from 'next/head'
 import Link from "next/link";
 import styles from '../styles/Home.module.css'
-import { getSortedPostsData } from "../lib/blogpost";
+import { BlogPost, getSortedPostsData } from "../lib/blogpost";
 import {GetStaticProps} from 'next';
 import Date from "../components/date";
+import startOrm from "../lib/init-database";
+import { Show } from "../entities/Show";
 
-export default function Home({allPostsData}) {
+interface Props
+{
+    allPostsData : BlogPost[]
+    shows: Show[]
+}
+
+export default function Home({allPostsData, shows} : Props) {
     return (
     <div className={styles.container}>
         <Head>
@@ -14,11 +22,20 @@ export default function Home({allPostsData}) {
         </Head>
 
         <main className={styles.main}>
-
-            <p className={styles.description}>
-                Get started by editing{" "}
-                <code className={styles.code}>pages/index.js</code>
-            </p>
+            <section className="my-5">
+            <h2 className="text-4xl mb-3">
+                Shows
+            </h2>
+            <ul>
+                {shows.map(({shortName, id, key}) => (
+                    <li key={id} className="text-xl mb-3">
+                        <Link href={`/shows/${key}`}>
+                            <a className="hover:text-gray-600">{shortName}</a> 
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+            </section>
 
             <section className="my-5">
             <h2 className="text-4xl mb-3">
@@ -56,10 +73,10 @@ export default function Home({allPostsData}) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+    const orm = await startOrm();
     const allPostsData = getSortedPostsData();
+    const shows = await orm.em.find(Show, {});
     return {
-        props: {
-            allPostsData,
-        },
+        props: {allPostsData, shows: shows.map(s => s.toJSON())},
     };
 }

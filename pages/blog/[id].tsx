@@ -2,7 +2,6 @@ import Container from "../../components/container";
 import Date from "../../components/date";
 import DefaultLink from "../../components/defaultLink";
 import {getAllPostIds, getPostData, BlogPost} from "../../lib/blogpost";
-import Link from "next/link"
 import Head from "next/head";
 
 export const getStaticPaths = async () => {
@@ -28,7 +27,7 @@ export default function Post({postData} : Props) {
             </div>
 
             {/* Article */}
-            <div className="my-5"dangerouslySetInnerHTML={{__html: postData.contentHtml}}></div>
+            <div className="my-5" dangerouslySetInnerHTML={{__html: postData.contentHtml}}></div>
 
         </article>
         <div className="mt-6 underline text-blue-700 hover:text-indigo-700">

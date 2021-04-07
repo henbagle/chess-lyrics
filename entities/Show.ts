@@ -1,11 +1,5 @@
 import {Entity, PrimaryKey, Property, Enum } from "@mikro-orm/core";
 
-export enum ShowFormat {
-    album,
-    fullyStaged,
-    concert
-}
-
 @Entity({ tableName: 'shows' })
 export class Show{
     @PrimaryKey()
@@ -14,39 +8,39 @@ export class Show{
     @Property()
     title!: string;
 
-    @Property()
+    @Property({nullable: true})
     subtitle?: string;
 
     @Property()
     key!: string;
 
-    @Property()
+    @Property({nullable: true})
     location?: string;
 
-    @Property()
+    @Property({nullable: true})
     theatre?: string;
 
     @Property()
     year!: number;
 
-    @Enum(() => ShowFormat)
-    format!: ShowFormat;
-
-    @Property({fieldName:"openedDate"})
-    openedDate?: Date;
-
-    @Property({fieldName:"closedDate"})
-    closedDate?: Date;
-
     @Property()
+    format!: string;
+
+    @Property({nullable: true, fieldName:"openedDate", hidden: true})
+    openedDate?: Date = new Date();
+
+    @Property({nullable: true, fieldName:"closedDate", hidden: true})
+    closedDate?: Date = new Date();
+
+    @Property({nullable: true})
     notes?: string;
 
-    @Property()
+    @Property({nullable: true})
     soundtrack?: string;
 
-    @Property()
+    @Property({nullable: true})
     video?: string;
 
-    @Property({fieldName:"shortName"})
+    @Property({nullable: true, fieldName:"shortName"})
     shortName?: string;
 }

@@ -16,12 +16,12 @@ export class Song {
     @ManyToOne(() => BaseSong, {nullable : true, fieldName:"baseSong"})
     baseSong?: BaseSong;
 
-    @Property({fieldName:"trackName"})
+    @Property({nullable: true, fieldName:"trackName"})
     trackName?: string;
 
-    @Property({fieldName:"showOrder"})
+    @Property({nullable: true, fieldName:"showOrder"})
     showOrder!: number;
 
-    @Property()
+    @Property({nullable: true})
     act?: number;
 }

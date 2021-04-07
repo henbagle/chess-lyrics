@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "config/init-database.ts"
+    "lib/init-database.ts"
   ],
   "exclude": [
     "node_modules"
