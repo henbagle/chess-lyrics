@@ -4,13 +4,13 @@ import styles from '../styles/Home.module.css'
 import { BlogPost, getSortedPostsData } from "../lib/blogpost";
 import {GetStaticProps} from 'next';
 import Date from "../components/date";
-import startOrm from "../lib/init-database";
-import { Show } from "../entities/Show";
+import prisma from "../db/prisma";
+import { shows } from '.prisma/client';
 
 interface Props
 {
     allPostsData : BlogPost[]
-    shows: Show[]
+    shows: shows[]
 }
 
 export default function Home({allPostsData, shows} : Props) {
@@ -73,10 +73,9 @@ export default function Home({allPostsData, shows} : Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const orm = await startOrm();
     const allPostsData = getSortedPostsData();
-    const shows = await orm.em.find(Show, {});
+    const shows = await prisma.shows.findMany();
     return {
-        props: {allPostsData, shows: shows.map(s => s.toJSON())},
+        props: {allPostsData, shows},
     };
 }

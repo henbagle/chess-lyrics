@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../db/chessDb"
+}
+
+model baseSong {
+  id             Int     @id @default(autoincrement())
+  title          String
+  originalShowId Int?
+  maxVerses      Int?    @default(1)
+  originalShow   shows?  @relation(fields: [originalShowId], references: [id])
+  songs          songs[]
+}
+
+model shows {
+  id         Int        @id @default(autoincrement())
+  title      String
+  subtitle   String?
+  key        String
+  location   String?
+  theatre    String?
+  year       Int
+  format     String
+  openedDate String?
+  closedDate String?
+  notes      String?
+  soundtrack String?
+  video      String?
+  shortName  String?
+  baseSongs  baseSong[]
+  songs      songs[]
+}
+
+model songs {
+  id         Int       @id @default(autoincrement())
+  showId     Int
+  title      String
+  baseSongId Int?
+  trackName  String?
+  showOrder  Int
+  act        Int?
+  baseSong   baseSong? @relation(fields: [baseSongId], references: [id])
+  show       shows     @relation(fields: [showId], references: [id])
+  verses     verses[]
+}
+
+model verses {
+  id       Int    @id @default(autoincrement())
+  songId   Int
+  verse    String
+  position Int
+  song     songs  @relation(fields: [songId], references: [id])
+}
