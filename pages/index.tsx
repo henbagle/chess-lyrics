@@ -29,7 +29,7 @@ export default function Home({allPostsData, shows} : Props) {
             <ul>
                 {shows.map(({shortName, id, key}) => (
                     <li key={id} className="text-xl mb-3">
-                        <Link href={`/shows/${key}`}>
+                        <Link href={`/show/${key}`}>
                             <a className="hover:text-gray-600">{shortName}</a> 
                         </Link>
                     </li>

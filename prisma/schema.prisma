@@ -31,6 +31,7 @@ model shows {
   soundtrack String?
   video      String?
   shortName  String?
+  cast       String?
   baseSongs  baseSong[]
   songs      songs[]
 }
@@ -43,7 +44,10 @@ model songs {
   trackName  String?
   showOrder  Int
   act        Int?
+  copySongId Int?
   baseSong   baseSong? @relation(fields: [baseSongId], references: [id])
+  copySong   songs?    @relation(name: "copySong", fields: [copySongId], references: [id])
+  copiedBy   songs[]  @relation(name: "copySong")
   show       shows     @relation(fields: [showId], references: [id])
   verses     verses[]
 }
