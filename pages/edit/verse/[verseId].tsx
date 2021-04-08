@@ -4,7 +4,7 @@ import Container from "components/container";
 import EditorLinks from "components/editor/editorLinks"
 import Alert from "components/alert";
 import Head from "next/head"
-import VerseForm from "components/verseForm";
+import VerseForm from "components/editor/verseForm";
 import DefaultLink from "components/defaultLink";
 import {VerseResult} from "lib/results";
 import prisma from "db/prisma";
@@ -23,7 +23,7 @@ interface EditProps
     }[]
 }
 
-export default function EditVerse({verse} : EditProps)
+export default function EditVerse({verse, songs} : EditProps)
 {
     const [result, setResult] = useState<VerseResult>();
 
@@ -48,7 +48,7 @@ export default function EditVerse({verse} : EditProps)
                 Edit Verse
             </h1>
             <h2 className="text-xl">{verse.song.title} from {verse.song.show.shortName}</h2> 
-            <VerseForm onSubmit={onSubmit} initialValues={verse as verses} />
+            <VerseForm onSubmit={onSubmit} initialValues={verse as verses} songs={songs} />
             <div>
                 <DefaultLink href={`/edit/verse/${verse.id - 1}`}>Previous Verse</DefaultLink>{" - "}
                 <DefaultLink href={`/edit/verse/${verse.id + 1}`}>Next Verse</DefaultLink> {" - "}

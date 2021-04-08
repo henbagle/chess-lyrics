@@ -5,7 +5,7 @@ import EditorLinks from "components/editor/editorLinks"
 import Alert from "components/alert";
 import DefaultLink from "components/defaultLink";
 import Head from "next/head"
-import VerseForm from "components/verseForm";
+import VerseForm from "components/editor/verseForm";
 import {VerseResult} from "lib/results";
 import prisma from "db/prisma";
 
@@ -16,7 +16,7 @@ interface NewVerseProps {
     }[]
 }
 
-export default function NewVerse()
+export default function NewVerse({songs}:NewVerseProps)
 {
     const [result, setResult] = useState<VerseResult>();
     
@@ -40,7 +40,7 @@ export default function NewVerse()
             <h1 className="text-4xl font-bold pt-4">
                 Create New Verse
             </h1>
-            <VerseForm onSubmit={onSubmit} />
+            <VerseForm onSubmit={onSubmit} songs={songs} />
             <EditorLinks />
     </Container>
     )

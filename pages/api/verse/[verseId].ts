@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 where: { id: idToUpdate},
                 data: verseRequest})
                 
-            const result: VerseResult = {result: "Success", verse: updatedVerse, success: true};
+            const result: VerseResult = {result: `Edited verse ${updatedVerse.id} in position ${updatedVerse.position} on song ${updatedVerse.songId}`, verse: updatedVerse, success: true};
             res.status(200).json(result);
         }
         catch {

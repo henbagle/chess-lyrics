@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 return;
             }
             const newVerse = await prisma.verses.create({data: verseRequest})
-            const result: VerseResult = {result: "Success", verse: newVerse, action:"clear", success: true};
+            const result: VerseResult = {result: `Created verse ${newVerse.id} in position ${newVerse.position} on song ${newVerse.songId}`, verse: newVerse, action:"clear", success: true};
             res.status(200).json(result);
             return;
         }
