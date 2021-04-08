@@ -1,7 +1,7 @@
-import Container from "../../components/container";
-import Date from "../../components/date";
-import DefaultLink from "../../components/defaultLink";
-import {getAllPostIds, getPostData, BlogPost} from "../../lib/blogpost";
+import Container from "components/container";
+import Date from "components/date";
+import DefaultLink from "components/defaultLink";
+import {getAllPostIds, getPostData, BlogPost} from "lib/blogpost";
 import Head from "next/head";
 
 export const getStaticPaths = async () => {

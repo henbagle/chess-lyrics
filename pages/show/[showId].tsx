@@ -1,10 +1,10 @@
-import Container from "../../components/container";
-import Date from "../../components/date";
-import DefaultLink from "../../components/defaultLink";
-import TrackList from "../../components/showPage/trackList"
+import Container from "components/container";
+import Date from "components/date";
+import DefaultLink from "components/defaultLink";
+import TrackList from "components/showPage/trackList"
 import Head from "next/head";
 import { shows, songs } from "@prisma/client";
-import prisma from "../../db/prisma";
+import prisma from "db/prisma";
 interface Props {
     show : shows & {songs: songs[]},
 }
@@ -19,16 +19,18 @@ export default function ShowPage({show} : Props)
             <h1 className="text-4xl font-bold">
                 {show.title}
             </h1>
-            {show.subtitle && show.subtitle !== "" ? 
+            {show.subtitle && show.subtitle !== "" && 
             <h2 className="text-2xl">
                 {show.subtitle}
-            </h2> : null}
-            {show.openedDate === null ? <p>
+            </h2>}
+
+            {show.openedDate !== "" && <p>
                 Opened On: <Date dateString={show.openedDate} />
-            </p>: null}
-            {show.closedDate === null ? <p>
+            </p>}
+
+            {show.closedDate !== "" && <p>
                 Closed On: <Date dateString={show.closedDate} />
-            </p>: null}
+            </p>}
 
             <div className="my-4">
                 <TrackList songs={show.songs} />

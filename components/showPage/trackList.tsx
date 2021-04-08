@@ -12,18 +12,20 @@ interface SongLiProps
 function SongLi({song}:SongLiProps)
 {
     return <li>
-        <span>
-            {song.showOrder}.{" "}
-        </span>
-        <span className="font-bold">
-            <DefaultLink href={`/song/${song.id}`}>
-            {song.title}
-            </DefaultLink>{" "}
-        </span>
-        {song.trackName && song.trackName != "" && song.trackName != song.title ?
-        <span>
-            ({song.trackName})
-        </span>:null}
+            <span>
+                {song.showOrder}.{" "}
+            </span>
+
+            <span className="font-bold">
+                <DefaultLink href={`/song/${song.id}`}>
+                {song.title}
+                </DefaultLink>{" "}
+            </span>
+            
+            {song.trackName && song.trackName != "" && song.trackName != song.title &&
+            <span>
+                ({song.trackName})
+            </span>}
         </li>
 }
 

@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Link from "next/link";
-import styles from '../styles/Home.module.css'
-import { BlogPost, getSortedPostsData } from "../lib/blogpost";
+import { BlogPost, getSortedPostsData } from "lib/blogpost";
 import {GetStaticProps} from 'next';
-import Date from "../components/date";
-import prisma from "../db/prisma";
+import Date from "components/date";
+import prisma from "db/prisma";
 import { shows } from '.prisma/client';
+import Container from 'components/container';
 
 interface Props
 {
@@ -15,14 +15,14 @@ interface Props
 
 export default function Home({allPostsData, shows} : Props) {
     return (
-    <div className={styles.container}>
+    <Container>
         <Head>
             <title>Create Next App</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className={styles.main}>
-            <section className="my-5">
+        <main>
+            <section className="my-6">
             <h2 className="text-4xl mb-3">
                 Shows
             </h2>
@@ -30,7 +30,7 @@ export default function Home({allPostsData, shows} : Props) {
                 {shows.map(({shortName, id, key}) => (
                     <li key={id} className="text-xl mb-3">
                         <Link href={`/show/${key}`}>
-                            <a className="hover:text-gray-600">{shortName}</a> 
+                            <a className="hover:text-gray-600">{"- "}{shortName}</a> 
                         </Link>
                     </li>
                 ))}
@@ -53,22 +53,7 @@ export default function Home({allPostsData, shows} : Props) {
             </ul>
             </section>
         </main>
-
-        <footer className={styles.footer}>
-            <a
-                href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Powered by{" "}
-                <img
-                    src="/vercel.svg"
-                    alt="Vercel Logo"
-                    className={styles.logo}
-                />
-            </a>
-        </footer>
-    </div>
+    </Container>
   );
 }
 

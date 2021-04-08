@@ -1,9 +1,9 @@
-import Container from "../../components/container";
-import DefaultLink from "../../components/defaultLink";
+import Container from "components/container";
+import DefaultLink from "components/defaultLink";
 import Head from "next/head";
 import { shows, songs, baseSong, verses } from "@prisma/client";
-import prisma from "../../db/prisma";
-import Lyrics from "../../components/lyrics";
+import prisma from "db/prisma";
+import Lyrics from "components/lyrics";
 
 interface Props {
     song: songs &
@@ -24,10 +24,9 @@ export default function ShowPage({ song }: Props) {
             <h1 className="text-4xl font-bold">
                 {song.title}
             </h1>
-            {song.show ?
-                <h2 className="text-xl">
-                    From: <DefaultLink href={`/show/${song.show.key}`}>{song.show.shortName}</DefaultLink>
-                </h2> : null}
+            {song.show && <h2 className="text-xl">
+                From: <DefaultLink href={`/show/${song.show.key}`}>{song.show.shortName}</DefaultLink>
+            </h2>}
             {song?.show?.id !== song?.baseSong?.originalShowId ?
                 <h3 className="text-md">
                     First instance: {song.baseSong.title} from the {song.baseSong.originalShow.shortName}
@@ -44,8 +43,8 @@ export default function ShowPage({ song }: Props) {
             }
 
             <div className="mt-6 underline text-blue-700 hover:text-indigo-700">
-                <DefaultLink href="/">
-                    ← Back to home
+                <DefaultLink href={`/show/${song.show.key}`}>
+                    ← Back to show page
                 </DefaultLink>
             </div>
         </Container>
@@ -54,7 +53,7 @@ export default function ShowPage({ song }: Props) {
 
 
 export const getStaticProps = async ({ params }) => {
-    const song = await prisma.songs.findFirst({ 
+    const song = await prisma.songs.findUnique({ 
         where: { id: parseInt(params.id) }, 
         include: { 
             verses: { orderBy: { position: 'asc' } }, 

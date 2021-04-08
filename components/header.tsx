@@ -11,18 +11,18 @@ export default function Header(){
                         </Link>
                     </div>
                     <div className="pt-1 text-lg flex flex-row">
-                        <div className="mx-2">
+                        {/* <div className="mx-2">
                             <Link href="/lyrics">
                                 Lyrics
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="mx-2">
-                            <Link href="/lyrics">
+                            <Link href="/">
                                 Blog
                             </Link>
                         </div>
                         <div className="ml-2">
-                            <Link href="/about">
+                            <Link href="/">
                                 About
                             </Link>
                         </div>
