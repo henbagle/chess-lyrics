@@ -37,10 +37,12 @@ export default function ShowPage({ song }: Props) {
                 Lyrics:
             </h2>
             
-            {song.copySong !== null ?
-            <Lyrics verses={song.copySong.verses} />:
-            <Lyrics verses={song.verses} />
-            }
+            <div className="inline-grid grid-cols-2 auto-rows-min align-start gap-x-10">
+                {song.copySong !== null ?
+                <Lyrics verses={song.copySong.verses} />:
+                <Lyrics verses={song.verses} />
+                }
+            </div>
 
             <div className="mt-6 underline text-blue-700 hover:text-indigo-700">
                 <DefaultLink href={`/show/${song.show.key}`}>
