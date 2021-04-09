@@ -1,27 +1,29 @@
 import {verses, songs, shows, baseSong} from "@prisma/client";
 
-export interface VerseResult
+export interface Result
 {
-    result: string,
     success: boolean,
+    result: string
+}
+
+export interface VerseResult extends Result
+{
     verse?: verses,
     action?: "link" | "" | "clear"
 }
 
-export interface SongResult
+export interface SongResult extends Result
 {
-    result: string,
     song?: songs
+    action?: "edit" | ""
 }
 
-export interface ShowResult
+export interface ShowResult extends Result
 {
-    result: string,
     show?: shows
 }
 
-export interface BaseSongResult
+export interface BaseSongResult extends Result
 {
-    result: string,
     baseSong?: baseSong
 }

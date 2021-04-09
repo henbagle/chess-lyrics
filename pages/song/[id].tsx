@@ -1,6 +1,7 @@
 import Container from "components/container";
 import DefaultLink from "components/defaultLink";
 import Head from "next/head";
+import {useRouter} from "next/router";
 import { shows, songs, baseSong, verses } from "@prisma/client";
 import prisma from "db/prisma";
 import Lyrics from "components/lyrics";
@@ -15,7 +16,8 @@ interface Props {
     }
 }
 
-export default function ShowPage({ song }: Props) {
+export default function LyricsPage({ song }: Props) {
+    const {query: {debug}} = useRouter();
     return (
         <Container>
             <Head>
@@ -39,8 +41,8 @@ export default function ShowPage({ song }: Props) {
             
             <div className="inline-grid grid-cols-2 auto-rows-min align-start gap-x-10">
                 {song.copySong !== null ?
-                <Lyrics verses={song.copySong.verses} />:
-                <Lyrics verses={song.verses} />
+                <Lyrics verses={song.copySong.verses} debug={(debug == "true")}/>:
+                <Lyrics verses={song.verses} debug={(debug == "true")}/>
                 }
             </div>
 

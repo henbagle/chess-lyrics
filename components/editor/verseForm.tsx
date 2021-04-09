@@ -1,13 +1,15 @@
-import  {Form, Field} from 'react-final-form'
+import  {Form, Field, FormSpy} from 'react-final-form'
 import {verses, Prisma, songs} from "@prisma/client";
+import { FormApi } from 'final-form';
 
 interface Props
 {
-    onSubmit: (verse: any) => void;
+    onSubmit: (verse: any, form: FormApi<any, verses>) => void;
     initialValues?: verses
     songs?: {
         id: number
-        title: string
+        title: string,
+        showId: number
     }[],
     initialSong?: songs,
 }
@@ -42,7 +44,7 @@ const VerseForm = ({onSubmit, initialValues, songs} : Props) => (
                 <div className="flex flex-row mb-4">
                     <Field name="songId">
                         {({input, meta}) => (
-                            <div className="flex flex-col">
+                            <div className="flex flex-col flex-none">
                                 <div>
                                     <label className="text-lg font-bold">Song ID:</label>
                                     <input className="border-2 rounded-md px-2 text-md text-grey-darkest ml-2 focus:ring w-20" {...input} placeholder="0" />
@@ -62,6 +64,11 @@ const VerseForm = ({onSubmit, initialValues, songs} : Props) => (
                             </div>
                         )}
                     </Field>
+                    <FormSpy subscription={{values: true}}>
+                        {({values}) => {
+                            return <div>{songs.filter((el) => (el.id==parseInt(values["songId"]))).map((el) => `${el.title} - Show #${el.showId}`)[0]}</div>
+                        }}
+                    </FormSpy>
                 </div>
                 <Field name="verse">
                     {({input, meta}) => (

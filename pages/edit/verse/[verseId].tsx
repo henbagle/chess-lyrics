@@ -19,7 +19,8 @@ interface EditProps
     },
     songs: {
         id: number
-        title: string
+        title: string,
+        showId: number
     }[]
 }
 
@@ -64,7 +65,7 @@ export async function getServerSideProps(context)
     if(isNaN(id)) return {notFound: true};
 
     const verse = await prisma.verses.findUnique({where: {id}, include: {song: {include: {show: true}}}});
-    const songs = await prisma.songs.findMany({select: {id: true, title: true}});
+    const songs = await prisma.songs.findMany({select: {id: true, title: true, showId: true}});
 
     if(verse === null) return {notFound: true};
     else return ({props: {verse, songs}});

@@ -1,5 +1,6 @@
 import { verses, Prisma } from "@prisma/client";
 import { useState } from "react";
+import {FormApi} from "final-form";
 import Container from "components/container";
 import EditorLinks from "components/editor/editorLinks"
 import Alert from "components/alert";
@@ -12,7 +13,8 @@ import prisma from "db/prisma";
 interface NewVerseProps {
     songs: {
         id: number
-        title: string
+        title: string,
+        showId: number
     }[]
 }
 
@@ -20,10 +22,15 @@ export default function NewVerse({songs}:NewVerseProps)
 {
     const [result, setResult] = useState<VerseResult>();
     
-    const onSubmit = async (verse: any) => {
+    const onSubmit = async (verse: any, form: FormApi<any, verses>) => {
         const res: Response = await fetch("/api/verse/new", {method: 'POST', body: JSON.stringify({verse})})
         const verseRes: VerseResult = await res.json();
         setResult(verseRes);
+        if(verseRes.action == "clear")
+        {
+            form.change("position", parseInt(form.getFieldState("position").value) + 1);
+            form.change("verse", "");
+        }
     }
 
     return (
@@ -48,6 +55,6 @@ export default function NewVerse({songs}:NewVerseProps)
 
 export async function getServerSideProps(context)
 {
-    const songs = await prisma.songs.findMany({select: {id: true, title: true}});
+    const songs = await prisma.songs.findMany({select: {id: true, title: true, showId: true}});
     return ({props: {songs}});
 }

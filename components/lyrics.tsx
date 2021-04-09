@@ -1,19 +1,22 @@
 import { verses } from "@prisma/client";
 interface LyricProps {
     verses: verses[],
-    compare?: boolean
+    compare?: boolean,
+    debug?: boolean
 }
 
 interface VerseProps {
     verse: verses,
-    compare?: boolean
+    compare?: boolean,
+    debug?: boolean
 }
 
-function Verse({verse}:VerseProps)
+function Verse({verse, compare, debug}:VerseProps)
 {
     if(!verse.verse.includes("@col"))
     {
         return (<p className="whitespace-pre-wrap col-span-2">
+                {debug && `${verse.id} - ${verse.position}`}
                 {verse.verse}
                 <br/><br/>
             </p>)
@@ -24,13 +27,14 @@ function Verse({verse}:VerseProps)
         return (<>
         {columns.map((verseText, i) => (
         <p className="whitespace-pre-wrap" key={`${verse.id}-${i}}`}>
+                {debug && `${verse.id} - ${verse.position}`}
                 {verseText}
                 <br/><br/>
         </p>))} </>)
     }
 }
 
-export default function Lyrics({verses, compare}: LyricProps)
+export default function Lyrics({verses, compare, debug}: LyricProps)
 {
-    return <>{verses.map(el => (<Verse verse={el} key={el.position} />))}</>;
+    return <>{verses.map(el => (<Verse verse={el} key={el.position} compare={compare} debug={debug} />))}</>;
 }
