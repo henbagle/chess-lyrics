@@ -17,7 +17,7 @@ function Verse({verse, compare, debug}:VerseProps)
     {
         return (<p className="whitespace-pre-wrap col-span-2">
                 {debug && `${verse.id} - ${verse.position}`}
-                {verse.verse}
+                {verse.verse.trim()}
                 <br/><br/>
             </p>)
     }
@@ -36,5 +36,7 @@ function Verse({verse, compare, debug}:VerseProps)
 
 export default function Lyrics({verses, compare, debug}: LyricProps)
 {
-    return <>{verses.map(el => (<Verse verse={el} key={el.position} compare={compare} debug={debug} />))}</>;
+    return (<div className="inline-grid grid-cols-2 auto-rows-min align-start gap-x-10">
+        {verses.map(el => (<Verse verse={el} key={el.position} compare={compare} debug={debug} />))}
+    </div>);
 }

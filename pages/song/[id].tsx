@@ -4,36 +4,28 @@ import Head from "next/head";
 import {useRouter} from "next/router";
 import { shows, songs, baseSong, verses } from "@prisma/client";
 import prisma from "db/prisma";
-import Lyrics from "components/lyrics";
+import {SongExtended} from "lib/song"
+import Title from "components/songPage/title";
+import {MetadataShort} from "components/songPage/metadata";
+import Lyrics from "components/songPage/lyrics";
 
 interface Props {
-    song: songs &
-    {
-        show: shows,
-        baseSong: baseSong & { originalShow: shows },
-        verses: verses[]
-        copySong?: songs & {verses: verses[]}
-    }
+    song: SongExtended
 }
 
 export default function LyricsPage({ song }: Props) {
     const {query: {debug}} = useRouter();
+    if(song.copySong !== null) song.verses = song.copySong.verses;
+
     return (
         <Container>
             <Head>
                 <title>{song.title} - {song.show.shortName} - ChessLyrics</title>
             </Head>
-            <h1 className="text-4xl font-bold">
-                {song.title}
-            </h1>
-            {song.show && <h2 className="text-xl">
-                From: <DefaultLink href={`/show/${song.show.key}`}>{song.show.shortName}</DefaultLink>
-            </h2>}
-            {song?.show?.id !== song?.baseSong?.originalShowId && song.baseSong ?
-                <h3 className="text-md">
-                    First instance: {song.baseSong.title} from the {song.baseSong.originalShow.shortName}
-                </h3>
-                : null}
+            <div className="mt-4" />
+            
+            <Title song={song} />
+            <MetadataShort song={song} />
 
             <DefaultLink href={`/edit/song/${song.id}`}>Edit</DefaultLink>
 
@@ -41,14 +33,9 @@ export default function LyricsPage({ song }: Props) {
                 Lyrics:
             </h2>
             
-            <div className="inline-grid grid-cols-2 auto-rows-min align-start gap-x-10">
-                {song.copySong !== null ?
-                <Lyrics verses={song.copySong.verses} debug={(debug == "true")}/>:
-                <Lyrics verses={song.verses} debug={(debug == "true")}/>
-                }
-            </div>
+            <Lyrics verses={song.verses} debug={(debug == "true")}/>
 
-            <div className="mt-6 underline text-blue-700 hover:text-indigo-700">
+            <div>    
                 <DefaultLink href={`/show/${song.show.key}`}>
                     ← Back to show page
                 </DefaultLink>
