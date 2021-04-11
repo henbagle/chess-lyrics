@@ -1,6 +1,7 @@
 import  {Form, Field, FormSpy} from 'react-final-form'
 import {verses, Prisma, songs} from "@prisma/client";
 import { FormApi } from 'final-form';
+import {ChessInput, ChessButton} from "components/formElements";
 
 interface Props
 {
@@ -47,7 +48,7 @@ const VerseForm = ({onSubmit, initialValues, songs} : Props) => (
                             <div className="flex flex-col flex-none">
                                 <div>
                                     <label className="text-lg font-bold">Song ID:</label>
-                                    <input className="border-2 rounded-md px-2 text-md text-grey-darkest ml-2 focus:ring w-20" {...input} placeholder="0" />
+                                    <ChessInput {...input} className="w-20 ml-2" placeholder="0" />
                                 </div>
                                 {meta.error && meta.touched && <div>{meta.error}</div>}
                             </div>
@@ -58,7 +59,7 @@ const VerseForm = ({onSubmit, initialValues, songs} : Props) => (
                             <div className="mx-3 flex flex-col">
                                 <div>
                                     <label className="text-lg font-bold">Position:</label>
-                                    <input className="border-2 rounded-md px-2 text-md text-grey-darkest ml-2 focus:ring w-20" {...input} placeholder="0" />
+                                    <ChessInput {...input} className="w-20 ml-2" placeholder="0" />
                                 </div>
                                 {meta.error && meta.touched && <div>{meta.error}</div>}
                             </div>
@@ -80,7 +81,7 @@ const VerseForm = ({onSubmit, initialValues, songs} : Props) => (
                     )}
                 </Field>
 
-                <button type="submit" className="font-bold border-2 p-2 bg-gray-300">Submit</button>
+                <ChessButton type="submit">Submit</ChessButton>
             </form>
         )}
     />

@@ -1,9 +1,22 @@
 import DefaultLink from "components/defaultLink";
 import { useState } from 'react';
+import {ChessInput, ChessButton} from "components/formElements";
+
+function copySongId(songIdString)
+{
+    const songId = parseInt(songIdString);
+    if(isNaN(songId)) return;
+
+    // Fetch request
+
+    // redirect to edit page for new song
+    console.log(songId);
+}
 
 export default function EditorLinks()
 {
     const [closed, setClosed] = useState(true);
+    const [copySong, setCopySong] = useState("0");
 
     return (<>
     <span className="underline text-blue-600 hover:text-blue-800" onClick={() => setClosed(false)}>
@@ -23,6 +36,13 @@ export default function EditorLinks()
             </div>
             <div>
                 <p className="font-bold">Songs:</p>
+                <p><DefaultLink href="/edit/song/new">New Song</DefaultLink></p>
+                <p><DefaultLink href="/edit/song/0">Edit Song</DefaultLink></p>
+                <div className="mt-2">
+                    <p className="font-bold"> Copy Song: </p>
+                    <ChessInput className="w-20" value={copySong} onChange={e => setCopySong(e.target.value)}/>
+                    <ChessButton className="py-0" onClick={() => copySongId(copySong)}>Do It</ChessButton>
+                </div>
             </div>
             <div className="mr-3">
                 <p className="font-bold">Shows:</p>

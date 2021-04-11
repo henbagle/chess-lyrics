@@ -29,8 +29,15 @@ export default async function handler(req, res) {
             }
             else 
             {
-                delete song.id;
-                const songRequest: Prisma.songsUncheckedCreateInput = { ...song};
+                const songRequest: Prisma.songsUncheckedCreateInput = {
+                    title: song.title,
+                    showOrder: parseInt(song.showOrder),
+                    showId: parseInt(song.showId),
+                    trackName: song.trackName ?? null,
+                };
+                if(song.act) songRequest.act = parseInt(song.act);
+                if(song.baseSongId) songRequest.act = parseInt(song.baseSongId);
+                if(song.copySongId) songRequest.copySongId = parseInt(song.copySongId);
                 const newSong = await prisma.songs.create({data: songRequest})
                 result.song = newSong;
             }
@@ -38,7 +45,8 @@ export default async function handler(req, res) {
             res.status(200).json(result);
             return;
         }
-        catch {
+        catch (err) {
+            console.log(err);
             const result: SongResult = {result: "Unable to create song", success: false};
             res.status(503).json(result);
             return;
