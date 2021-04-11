@@ -12,6 +12,9 @@ export default async function handler(req, res) {
             {
                 const songIdToClone = parseInt(song.id);
                 const verseToClone = await prisma.songs.findUnique({where: {id:songIdToClone}, select: {verses: true}});
+
+                if(!verseToClone?.verses || verseToClone.verses.length == 0) throw "Err";
+
                 const newVerseTemplates = verseToClone.verses.map((v) => ({
                     position: v.position,
                     verse: v.verse
@@ -33,11 +36,12 @@ export default async function handler(req, res) {
                     title: song.title,
                     showOrder: parseInt(song.showOrder),
                     showId: parseInt(song.showId),
-                    trackName: song.trackName ?? null,
                 };
+                if(song.trackName) songRequest.trackName = song.trackName;
                 if(song.act) songRequest.act = parseInt(song.act);
-                if(song.baseSongId) songRequest.act = parseInt(song.baseSongId);
+                if(song.baseSongId) songRequest.baseSongId = parseInt(song.baseSongId);
                 if(song.copySongId) songRequest.copySongId = parseInt(song.copySongId);
+                console.log(songRequest);
                 const newSong = await prisma.songs.create({data: songRequest})
                 result.song = newSong;
             }

@@ -47,9 +47,9 @@ model songs {
   copySongId Int?
   baseSong   baseSong? @relation(fields: [baseSongId], references: [id])
   copySong   songs?    @relation(name: "copySong", fields: [copySongId], references: [id])
-  copiedBy   songs[]  @relation(name: "copySong")
   show       shows     @relation(fields: [showId], references: [id])
   verses     verses[]
+  copiedBy   songs[]   @relation("copySong")
 }
 
 model verses {

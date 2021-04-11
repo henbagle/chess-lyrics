@@ -15,7 +15,7 @@ export interface VerseResult extends Result
 export interface SongResult extends Result
 {
     song?: songs
-    action?: "edit" | ""
+    action?: "edit" | "" | "redirectEdit"
 }
 
 export interface ShowResult extends Result

@@ -9,8 +9,14 @@ export default async function handler(req, res) {
         const {song} = await JSON.parse(req.body);
         delete song.id;
         const songRequest: Prisma.songsUncheckedCreateInput = {
-            ...song
-        }
+            title: song.title,
+            showOrder: parseInt(song.showOrder),
+            showId: parseInt(song.showId),
+            trackName: song.trackName ?? null,
+        };
+        if(song.act) songRequest.act = parseInt(song.act);
+        if(song.baseSongId) songRequest.baseSongId = parseInt(song.baseSongId);
+        if(song.copySongId) songRequest.copySongId = parseInt(song.copySongId);
 
         try {
             const idToUpdate = parseInt(songId);

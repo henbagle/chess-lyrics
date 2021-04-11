@@ -1,13 +1,7 @@
 import  {Form, Field} from 'react-final-form'
 import {verses, songs} from "@prisma/client";
 import { FormApi } from 'final-form';
-import {ChessInput, ChessButton} from "components/formElements";
-
-// (alias) type songs = {
-//     id: number;
-//     trackName: string | null;
-//     copySongId: number | null;
-// }
+import {ChessInput, ChessButton, ChessSelect} from "components/formElements";
 
 interface Props
 {
@@ -26,6 +20,8 @@ interface Props
 interface ValidationResult {
     title?: string,
     showOrder?: string
+    act?: string,
+    copySongId?: string
 }
 
 const VerseForm = ({onSubmit, initialValues, shows, baseSongs} : Props) => (
@@ -35,7 +31,13 @@ const VerseForm = ({onSubmit, initialValues, shows, baseSongs} : Props) => (
         validate={values => {
             const errors: ValidationResult = {};
             if(!values.showOrder) errors.showOrder = "Required";
+            if(values.showOrder && isNaN(parseInt(values?.showOrder))) errors.showOrder = "Must be an integer"
+
             if(!values.title) errors.title = "Required"
+
+            if(values.act && isNaN(parseInt(values.act))) errors.act = "Must be an integer"
+            if(values.copySongId && isNaN(parseInt(values.copySongId))) errors.copySongId = "Must be an integer"
+
             return errors;
         }}
         render={({handleSubmit}) => (
@@ -64,22 +66,39 @@ const VerseForm = ({onSubmit, initialValues, shows, baseSongs} : Props) => (
                         )}
                     </Field>
                     <Field name="act">
-                        {({input}) => (
-                            <div>
-                                <label className="text-lg font-bold">Act:</label>
-                                <ChessInput {...input} className="w-20 ml-2" placeholder="1" />
+                        {({input, meta}) => (
+                            <div className="flex flex-col flex-none">
+                                <div>
+                                    <label className="text-lg font-bold">Act:</label>
+                                    <ChessInput {...input} className="w-20 ml-2" placeholder="1" />
+                                </div>
+                                {meta.error && meta.touched && <div>{meta.error}</div>}
                             </div>
                         )}
                     </Field>
                 </div>
 
                 <div className="flex flex-row mb-4">
-                    <Field name="showId" component="select">
-                        {shows.map(s => <option value={s.id} key={s.id}>{s.shortName}</option>)}
+                    <Field name="showId">
+                        {({input}) => (
+                            <div className="mr-3">
+                                <label className="text-lg font-bold">Show:</label>
+                                <ChessSelect className="ml-2" {...input}>
+                                    {shows.map(s => <option value={s.id} key={s.id}>{s.shortName}</option>)}
+                                </ChessSelect>
+                            </div>
+                        )}
                     </Field>
-                    <Field name="baseSongId" component="select">
-                        <option />
-                        {baseSongs.map(s => <option value={s.id} key={s.id}>{s.title}</option>)}
+                    <Field name="baseSongId">
+                        {({input}) => (
+                            <div>
+                                <label className="text-lg font-bold">Base Song:</label>
+                                <ChessSelect className="ml-2" {...input}>
+                                    <option />
+                                    {baseSongs.map(s => <option value={s.id} key={s.id}>{s.title}</option>)}
+                                </ChessSelect>
+                            </div>
+                        )}
                     </Field>
                 </div>
 
@@ -93,10 +112,13 @@ const VerseForm = ({onSubmit, initialValues, shows, baseSongs} : Props) => (
                         )}
                     </Field>
                     <Field name="copySongId">
-                        {({input}) => (
-                            <div>
-                                <label className="text-lg font-bold">Copy Song:</label>
-                                <ChessInput {...input} className="w-20 ml-2" placeholder="1" />
+                        {({input, meta}) => (
+                            <div className="flex flex-col flex-none">
+                                <div>
+                                    <label className="text-lg font-bold">Copy Song:</label>
+                                    <ChessInput {...input} className="w-20 ml-2" placeholder="1" />
+                                </div>
+                                {meta.error && meta.touched && <div>{meta.error}</div>}
                             </div>
                         )}
                     </Field>

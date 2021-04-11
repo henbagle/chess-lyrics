@@ -29,11 +29,13 @@ export default function LyricsPage({ song }: Props) {
             {song.show && <h2 className="text-xl">
                 From: <DefaultLink href={`/show/${song.show.key}`}>{song.show.shortName}</DefaultLink>
             </h2>}
-            {song?.show?.id !== song?.baseSong?.originalShowId ?
+            {song?.show?.id !== song?.baseSong?.originalShowId && song.baseSong ?
                 <h3 className="text-md">
                     First instance: {song.baseSong.title} from the {song.baseSong.originalShow.shortName}
                 </h3>
                 : null}
+
+            <DefaultLink href={`/edit/song/${song.id}`}>Edit</DefaultLink>
 
             <h2 className="text-2xl mt-5 mb-3">
                 Lyrics:
