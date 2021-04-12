@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     {
         try {
             const {clone, song} = await JSON.parse(req.body);
-            const result: SongResult = {result: `Created song`, success: true};
+            const result: SongResult = {result: `Created song`, success: true, action: "edit"};
             if(clone)
             {
                 const songIdToClone = parseInt(song.id);

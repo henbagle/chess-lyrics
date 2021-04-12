@@ -50,7 +50,7 @@ export default function EditVerse({verse, songs} : EditProps)
             <h1 className="text-4xl font-bold pt-4">
                 Edit Verse
             </h1>
-            <h2 className="text-xl">{verse.song.title} from {verse.song.show.shortName}</h2> 
+            <h2 className="text-xl"><DefaultLink href={`/edit/song/${verse.song.id}`}>{verse.song.title}</DefaultLink> from <DefaultLink href={`/show/${verse.song.show.key}`}>{verse.song.show.shortName}</DefaultLink></h2> 
             <VerseForm onSubmit={onSubmit} initialValues={verse as verses} songs={songs} />
             <ChessButton className="bg-red-300" onClick={async () => {
                 const res = await fetch(`/api/verse/${verse.id}`, {method: 'DELETE'});
