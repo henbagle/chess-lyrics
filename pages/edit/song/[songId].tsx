@@ -9,6 +9,8 @@ import Head from "next/head"
 import SongForm from "components/editor/songForm";
 import {SongResult} from "lib/results";
 import prisma from "db/prisma";
+import { ChessButton } from "components/formElements";
+import { useRouter } from "next/router"
 
 interface EditSongProps {
     song: songs & {
@@ -28,7 +30,8 @@ interface EditSongProps {
 export default function EditSong({song, shows, baseSongs}:EditSongProps)
 {
     const [result, setResult] = useState<SongResult>();
-    
+    const router = useRouter();
+
     const onSubmit = async (song: any) => {
         const res: Response = await fetch(`/api/songs/${song.id}`, {method: 'POST', body: JSON.stringify({song})})
         const songRes: SongResult = await res.json();
@@ -62,6 +65,11 @@ export default function EditSong({song, shows, baseSongs}:EditSongProps)
                     ))}
                 </ul>
             </div>
+
+            <ChessButton className="bg-red-300" onClick={async () => {
+                const res = await fetch(`/api/songs/${song.id}`, {method: 'DELETE'});
+                if(res.ok) router.push("/edit/song/new");
+            }}>Delete</ChessButton>
 
             <EditorLinks />
     </Container>

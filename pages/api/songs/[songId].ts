@@ -34,4 +34,20 @@ export default async function handler(req, res) {
             res.status(503).json({result: "Unable to create song", success: false});
         }
     }
+    if(req.method === "DELETE")
+    {
+        try {
+            const {songId} = req.query;
+            const id = parseInt(songId);
+            if(isNaN(id)) throw "not id";
+            await prisma.verses.deleteMany({where: {songId: id}});
+            await prisma.songs.delete({where: {id: id}});
+            const result: SongResult = {result: `Deleted song ${id}.`, success: true};
+            res.status(200).json(result);
+        }
+        catch (err)
+        {
+            res.status(503).json();
+        }
+    }
 }

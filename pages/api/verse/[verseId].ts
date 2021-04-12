@@ -27,5 +27,19 @@ export default async function handler(req, res) {
             res.status(503).json({result: "Unable to create verse", success: false});
         }
     }
+    if(req.method === "DELETE")
+    {
+        try {
+            const {verseId} = req.query;
+            const id = parseInt(verseId);
+            if(isNaN(id)) throw "not id";
+            const verse = await prisma.verses.delete({where: {id: id}});
+            res.status(200).json({result:`Deleted verse ${id}`, verse, success: true});
+        }
+        catch (err)
+        {
+            res.status(503).json();
+        }
+    }
 }
   

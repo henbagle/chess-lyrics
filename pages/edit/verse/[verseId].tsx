@@ -8,7 +8,8 @@ import VerseForm from "components/editor/verseForm";
 import DefaultLink from "components/defaultLink";
 import {VerseResult} from "lib/results";
 import prisma from "db/prisma";
-import { text } from "@fortawesome/fontawesome-svg-core";
+import { ChessButton } from "components/formElements";
+import { useRouter } from "next/router"
 
 interface EditProps
 {
@@ -27,6 +28,7 @@ interface EditProps
 export default function EditVerse({verse, songs} : EditProps)
 {
     const [result, setResult] = useState<VerseResult>();
+    const router = useRouter();
 
     const onSubmit = async (verse:Partial<verses>) => {
         const res: Response = await fetch(`/api/verse/${verse.id}`, {method: 'POST', body: JSON.stringify({verse})})
@@ -50,6 +52,10 @@ export default function EditVerse({verse, songs} : EditProps)
             </h1>
             <h2 className="text-xl">{verse.song.title} from {verse.song.show.shortName}</h2> 
             <VerseForm onSubmit={onSubmit} initialValues={verse as verses} songs={songs} />
+            <ChessButton className="bg-red-300" onClick={async () => {
+                const res = await fetch(`/api/verse/${verse.id}`, {method: 'DELETE'});
+                if(res.ok) router.push("/edit/verse/new");
+            }}>Delete</ChessButton>
             <div>
                 <DefaultLink href={`/edit/verse/${verse.id - 1}`}>Previous Verse</DefaultLink>{" - "}
                 <DefaultLink href={`/edit/verse/${verse.id + 1}`}>Next Verse</DefaultLink> {" - "}
