@@ -1,17 +1,15 @@
 import { verses } from "@prisma/client";
 interface LyricProps {
     verses: verses[],
-    compare?: boolean,
     debug?: boolean
 }
 
 interface VerseProps {
     verse: verses,
-    compare?: boolean,
     debug?: boolean
 }
 
-function Verse({verse, compare, debug}:VerseProps)
+export function Verse({verse, debug}:VerseProps)
 {
     if(!verse.verse.includes("@col"))
     {
@@ -34,9 +32,9 @@ function Verse({verse, compare, debug}:VerseProps)
     }
 }
 
-export default function Lyrics({verses, compare, debug}: LyricProps)
+export default function Lyrics({verses, debug}: LyricProps)
 {
     return (<div className="inline-grid grid-cols-2 auto-rows-min align-start gap-x-10">
-        {verses.map(el => (<Verse verse={el} key={el.position} compare={compare} debug={debug} />))}
+        {verses.map(el => (<Verse verse={el} key={el.position} debug={debug} />))}
     </div>);
 }

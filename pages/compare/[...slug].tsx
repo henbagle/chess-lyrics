@@ -6,7 +6,8 @@ import prisma from "db/prisma";
 import {SongExtended} from "lib/song"
 import Title from "components/songPage/title";
 import {MetadataShort} from "components/songPage/metadata";
-import Lyrics from "components/songPage/lyrics";
+import CompareLyrics from "components/songPage/compareLyrics";
+import {mergeAndCompareSongs} from "lib/compare";
 
 interface ComparePageProps
 {
@@ -30,22 +31,10 @@ export default function ComparePage({a, b} : ComparePageProps)
             
             <div><MetadataShort song={b}/></div>
 
-            {/* Song A Lyrics */}
-            <div>
-                <h2 className="text-2xl mt-5 mb-3">
-                    Lyrics:
-                </h2>
-                <Lyrics verses={a.verses}/>
-            </div>
-
-            {/* Song B Lyrics */}
-            <div>
-                <h2 className="text-2xl mt-5 mb-3">
-                    Lyrics:
-                </h2>
-                <Lyrics verses={b.verses}/>
-            </div>
         </div>
+
+        <CompareLyrics a={a.verses} b={b.verses} />
+
     </Container>
 }
 
@@ -74,5 +63,8 @@ export async function getServerSideProps(context)
         });
 
     if(songA === null || songB == null) return {notFound: true};
-    else return ({props: {a: songA, b: songB}});
+    if(songA.baseSongId !== songB.baseSongId) return {notFound: true};
+
+    [songA.verses, songB.verses] = mergeAndCompareSongs(songA.verses, songB.verses);
+    return ({props: {a: songA, b: songB}});
 }
