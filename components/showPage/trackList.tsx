@@ -15,11 +15,11 @@ function SongLi({song}:SongLiProps)
             <span>
                 {song.showOrder}.{" "}
             </span>
-
+            
             <span className="font-bold">
-                <DefaultLink href={`/song/${song.id}`}>
+                {song.hasLyrics?<DefaultLink href={`/song/${song.id}`}>
                 {song.title}
-                </DefaultLink>{" "}
+                </DefaultLink>:song.title}{" "}
             </span>
             
             {song.trackName && song.trackName != "" && song.trackName != song.title &&
@@ -43,7 +43,7 @@ export default function TrackList({songs} : TrackListProps) {
         const songsToActs = acts.map((el) => songs.filter(sng => sng.act == el));
         return <div>
             {songsToActs.map(actSongs =>
-            <div key={"act"+actSongs[0].act}>
+            <div key={"act"+actSongs[0].act} className="mt-3">
                 <h4 className="text-lg">Act {actSongs[0].act}:</h4>
                 <ul>
                 {actSongs.map((el) => <SongLi song={el} key={el.id}/>)}

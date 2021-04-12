@@ -36,6 +36,7 @@ export default async function handler(req, res) {
                     title: song.title,
                     showOrder: parseInt(song.showOrder),
                     showId: parseInt(song.showId),
+                    hasLyrics: song.hasLyrics
                 };
                 if(song.trackName) songRequest.trackName = song.trackName;
                 if(song.act) songRequest.act = parseInt(song.act);

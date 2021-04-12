@@ -45,6 +45,7 @@ model songs {
   showOrder  Int
   act        Int?
   copySongId Int?
+  hasLyrics  Boolean?
   baseSong   baseSong? @relation(fields: [baseSongId], references: [id])
   copySong   songs?    @relation(name: "copySong", fields: [copySongId], references: [id])
   show       shows     @relation(fields: [showId], references: [id])

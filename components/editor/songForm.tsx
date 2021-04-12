@@ -100,6 +100,14 @@ const VerseForm = ({onSubmit, initialValues, shows, baseSongs} : Props) => (
                             </div>
                         )}
                     </Field>
+                    <Field name="hasLyrics" type="checkbox">
+                        {({input}) => (
+                            <div className="ml-3">
+                                <label className="text-lg font-bold mr-2">Has Lyrics:</label>
+                                <ChessInput {...input} type="checkbox"/>
+                            </div>
+                        )}
+                    </Field>
                 </div>
 
                 <div className="flex flex-row mb-4">
