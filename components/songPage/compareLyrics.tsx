@@ -18,9 +18,11 @@ interface ChunkProps {
 function ParseChunk({c}: ChunkProps)
 {
     let arr = [];
-    const isRed = c.includes('@d')
     const redClass = "bg-red-200";
     const greenClass = "bg-green-200";
+
+    const isRed = c.includes('@d')
+    const flip = c[0] == '@' // Do we start with a deletion/addition
     if(isRed)
     {
         arr = c.split('@d');
@@ -34,8 +36,8 @@ function ParseChunk({c}: ChunkProps)
     return (
     <>
         {arr.map((el, i) => {
-            if(i%2 === 0) return <>{el}</>
-            else return <span className={isRed?redClass:greenClass}>{el}</span>
+            if(i%2 === (flip?1:0)) return <span key={i}>{el}</span>
+            else return <span className={isRed?redClass:greenClass} key={i}>{el}</span>
         })}
     </>)
 }
@@ -76,7 +78,7 @@ export default function CompareLyrics({a, b}:CompareLyricsProps)
             <h2 className="text-2xl mt-5 mb-3">
                     Lyrics:
             </h2>
-            {combinedLyrics.map(el => (<CompareVerse verse={el} key={el.position}/>))}
+            {combinedLyrics.map((el, i) => (<CompareVerse verse={el} key={i}/>))}
     </div>);
 }
 
