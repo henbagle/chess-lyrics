@@ -24,7 +24,8 @@ export default async function handler(req, res) {
                     title: "Fill me",
                     showId: 0,
                     showOrder: 0,
-                    verses: {create: newVerseTemplates}
+                    verses: {create: newVerseTemplates},
+                    hasLyrics: true
                 }});
 
                 result.song = newSong;
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
                     title: song.title,
                     showOrder: parseInt(song.showOrder),
                     showId: parseInt(song.showId),
-                    hasLyrics: song.hasLyrics
+                    hasLyrics: song.hasLyrics ?? false
                 };
                 if(song.trackName) songRequest.trackName = song.trackName;
                 if(song.act) songRequest.act = parseInt(song.act);

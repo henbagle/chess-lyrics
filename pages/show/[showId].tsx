@@ -16,7 +16,7 @@ export default function ShowPage({show} : Props)
             <Head>
                 <title>{`${show.shortName}`} - ChessLyrics</title>
             </Head>
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-4xl font-bold mt-4">
                 {show.title}
             </h1>
             {show.subtitle && show.subtitle !== "" && 

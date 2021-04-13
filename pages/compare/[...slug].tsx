@@ -64,6 +64,8 @@ export async function getServerSideProps(context)
 
     if(songA === null || songB == null) return {notFound: true};
     if(songA.baseSongId !== songB.baseSongId) return {notFound: true};
+    if(songA.copySongId) songA.verses = songA.copySong.verses; 
+    if(songB.copySongId) songB.verses = songB.copySong.verses;
 
     [songA.verses, songB.verses] = mergeAndCompareSongs(songA.verses, songB.verses);
     return ({props: {a: songA, b: songB}});
